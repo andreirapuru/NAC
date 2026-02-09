@@ -114,6 +114,51 @@ EAP-TLS is **required** for all 802.1X authentication and provides the highest s
 | Certificate validation | Full chain validation, CRL/OCSP | Revocation checking |
 | TLS version | TLS 1.3 minimum (RFC 8446) | Protocol security |
 
+
+### MAC Authentication Bypass (MAB)
+
+### MAB Security Controls
+
+```mermaid
+flowchart TD
+    DEVICE[Device connects] --> DOT1X{802.1X<br/>capable?}
+    DOT1X -->|Yes| AUTH[Normal 802.1X auth]
+    DOT1X -->|No/Timeout| MAB_START[MAB initiated]
+
+    MAB_START --> MAC_CHECK{MAC in<br/>database?}
+    MAC_CHECK -->|Yes| PROFILE{Device profile<br/>match?}
+    MAC_CHECK -->|No| QUARANTINE[Quarantine VLAN]
+
+    PROFILE -->|Yes| ASSIGN[Assign policy VLAN]
+    PROFILE -->|No| QUARANTINE
+
+    ASSIGN --> MONITOR[Continuous monitoring<br/>for anomalies]
+    QUARANTINE --> ALERT[Security alert]
+```
+
+### MAB Configuration Requirements
+
+| Setting | Value | Rationale |
+|---------|-------|-----------|
+| MAB timeout | 30 seconds after 802.1X timeout | Allow 802.1X attempt first |
+| MAC format | Lowercase, hyphen-separated | Consistency |
+| RADIUS attribute | Calling-Station-Id | MAC identification |
+| Device profiling | Required | Validate device type |
+| Re-profiling interval | 24 hours | Detect MAC spoofing |
+| Unknown MAC policy | Deny or quarantine | Security default |
+
+### MAB Use Cases
+
+MAB provides network access for devices that cannot perform 802.1X authentication:
+
+| Device Category | Examples | MAB Policy |
+|-----------------|----------|------------|
+| Network printers | Enterprise print devices | Registered MAC, printer VLAN |
+| Building systems | HVAC, access control, elevators | Registered MAC, IoT VLAN |
+| Medical devices | Monitors, diagnostic equipment | Registered MAC, restricted VLAN |
+| AV equipment | Displays, projectors | Registered MAC, AV VLAN |
+| Legacy systems | Older equipment without supplicant | Registered MAC, legacy VLAN |
+
 ## Arquitetura ISE / Redundância
 
 ### Redundant Deployment
@@ -230,49 +275,7 @@ flowchart TD
     PUBLIC --> GUEST["Guest VLAN<br/>(Internet only)"]
 ```
 
-## MAC Authentication Bypass (MAB)
 
-### MAB Use Cases
-
-MAB provides network access for devices that cannot perform 802.1X authentication:
-
-| Device Category | Examples | MAB Policy |
-|-----------------|----------|------------|
-| Network printers | Enterprise print devices | Registered MAC, printer VLAN |
-| Building systems | HVAC, access control, elevators | Registered MAC, IoT VLAN |
-| Medical devices | Monitors, diagnostic equipment | Registered MAC, restricted VLAN |
-| AV equipment | Displays, projectors | Registered MAC, AV VLAN |
-| Legacy systems | Older equipment without supplicant | Registered MAC, legacy VLAN |
-
-### MAB Security Controls
-
-```mermaid
-flowchart TD
-    DEVICE[Device connects] --> DOT1X{802.1X<br/>capable?}
-    DOT1X -->|Yes| AUTH[Normal 802.1X auth]
-    DOT1X -->|No/Timeout| MAB_START[MAB initiated]
-
-    MAB_START --> MAC_CHECK{MAC in<br/>database?}
-    MAC_CHECK -->|Yes| PROFILE{Device profile<br/>match?}
-    MAC_CHECK -->|No| QUARANTINE[Quarantine VLAN]
-
-    PROFILE -->|Yes| ASSIGN[Assign policy VLAN]
-    PROFILE -->|No| QUARANTINE
-
-    ASSIGN --> MONITOR[Continuous monitoring<br/>for anomalies]
-    QUARANTINE --> ALERT[Security alert]
-```
-
-### MAB Configuration Requirements
-
-| Setting | Value | Rationale |
-|---------|-------|-----------|
-| MAB timeout | 30 seconds after 802.1X timeout | Allow 802.1X attempt first |
-| MAC format | Lowercase, hyphen-separated | Consistency |
-| RADIUS attribute | Calling-Station-Id | MAC identification |
-| Device profiling | Required | Validate device type |
-| Re-profiling interval | 24 hours | Detect MAC spoofing |
-| Unknown MAC policy | Deny or quarantine | Security default |
 
 ## Wireless 802.1X Integration
 
