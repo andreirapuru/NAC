@@ -1,13 +1,6 @@
----
-title: IEEE 802.1X Port-Based Network Access Control
-version: 1.0.0
-status: Supported
-last_updated: 2026-02-02
-ieee_reference: IEEE 802.1X-2020
----
-## 802.1X Architecture
+## Arquitetura 802.1X
 
-### Component Overview
+### Componentes
 
 ```mermaid
 graph LR
