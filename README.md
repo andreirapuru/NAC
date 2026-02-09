@@ -236,14 +236,15 @@ sequenceDiagram
 
 ### MAB Configuration Requirements
 
-| Setting | Value | Rationale |
-|---------|-------|-----------|
-| MAB timeout | 30 seconds after 802.1X timeout | Allow 802.1X attempt first |
-| MAC format | Lowercase, hyphen-separated | Consistency |
-| RADIUS attribute | Calling-Station-Id | MAC identification |
-| Device profiling | Required | Validate device type |
-| Re-profiling interval | 24 hours | Detect MAC spoofing |
-| Unknown MAC policy | Deny or quarantine | Security default |
+| Parâmetro                      | Configuração Recomendada                                                        | Justificativa Técnica                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| Timeout do MAB                 | Iniciar o MAB após o timeout do 802.1X (≈ 30 segundos)                          | Garantir prioridade ao 802.1X, utilizando MAB apenas como mecanismo de fallback                |
+| Formato do endereço MAC        | Padronização em minúsculas (lowercase) e com separador (ex.: xx-xx-xx-xx-xx-xx) | Assegurar consistência no cadastro e na correlação de identidades no ISE                       |
+| Atributo RADIUS utilizado      | Calling-Station-Id                                                              | Identificar o dispositivo com base no endereço MAC enviado pelo NAD (switch/AP)                |
+| Device Profiling               | Habilitado e obrigatório                                                        | Validar o tipo de dispositivo e reduzir o risco de autenticação indevida baseada apenas no MAC |
+| Intervalo de re-profiling      | 24 horas                                                                        | Detectar alterações de perfil e possíveis tentativas de spoofing de MAC                        |
+| Política para MAC desconhecido | Bloqueio ou quarentena (VLAN restrita / ACL de contenção)                       | Aplicar o princípio de segurança por padrão (default deny)                                     |
+
 
 ### MAB Use Cases
 
