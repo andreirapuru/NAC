@@ -11,14 +11,13 @@ graph LR
     end
 
     subgraph BACKEND["Backend Layer"]
-        RADIUS["Authentication Server<br/>(RADIUS)"]
+        RADIUS["Authentication/NAC Server<br/>(RADIUS)"]
         AD["Directory Service"]
         CA["Certificate Authority"]
-        NAC["NAC Policy Engine<br/>(Optional)"]
     end
 
     SUP <-->|"EAP over LAN<br/>(EAPoL)"| AUTH
     AUTH <-->|"RADIUS<br/>(UDP 1812/1813)"| RADIUS
     RADIUS <--> AD
     RADIUS <--> CA
-    RADIUS <--> NAC
+    
