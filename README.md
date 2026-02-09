@@ -24,7 +24,49 @@ graph LR
     RADIUS <--> CA
 ```    
 
-### Authentication Flow
+### Estado da porta
+
+```mermaid
+stateDiagram-v2
+    [*] --> Unauthorized: Port link up
+    Unauthorized --> Authenticating: EAPoL-Start received
+    Authenticating --> Authorized: Access-Accept
+    Authenticating --> Unauthorized: Access-Reject
+    Authenticating --> Unauthorized: Timeout
+    Authorized --> Unauthorized: Logoff/Link down
+    Authorized --> Reauthenticating: Reauth timer
+    Reauthenticating --> Authorized: Access-Accept
+    Reauthenticating --> Unauthorized: Access-Reject
+
+    note right of Unauthorized
+        No traffic permitted
+        except EAPoL frames
+    end note
+
+    note right of Authorized
+        Full network access
+        per RADIUS attributes
+    end note
+```
+
+### Escolha do Método de Autenticação
+
+```mermaid
+flowchart TD
+    START[Device Type Assessment] --> Q1{Device supports<br/>certificates?}
+    Q1 -->|Yes| Q2{MDM/PKI<br/>managed?}
+    Q1 -->|No| MAB["MAC Authentication Bypass<br/>(With segmentation + monitoring)"]
+
+    Q2 -->|Yes| EAPTLS["✅ EAP-TLS<br/>(Only permitted method)"]
+    Q2 -->|No| ENROLL["Enroll in PKI/MDM<br/>before deployment"]
+
+    ENROLL --> EAPTLS
+
+    EAPTLS --> RESULT[Apply VLAN/ACL policy]
+    MAB --> RESULT
+```
+
+### Autenticação EAP-TLS
 
 ```mermaid
 sequenceDiagram
@@ -59,65 +101,7 @@ sequenceDiagram
     end
 ```
 
-### Port States
-
-```mermaid
-stateDiagram-v2
-    [*] --> Unauthorized: Port link up
-    Unauthorized --> Authenticating: EAPoL-Start received
-    Authenticating --> Authorized: Access-Accept
-    Authenticating --> Unauthorized: Access-Reject
-    Authenticating --> Unauthorized: Timeout
-    Authorized --> Unauthorized: Logoff/Link down
-    Authorized --> Reauthenticating: Reauth timer
-    Reauthenticating --> Authorized: Access-Accept
-    Reauthenticating --> Unauthorized: Access-Reject
-
-    note right of Unauthorized
-        No traffic permitted
-        except EAPoL frames
-    end note
-
-    note right of Authorized
-        Full network access
-        per RADIUS attributes
-    end note
-```
-
-## EAP Method Standards
-
-### Method Comparison
-
-| EAP Method | Standard | Security Level | Certificate Required | Status (2026) |
-|------------|----------|----------------|---------------------|---------------|
-| **EAP-TLS** | RFC 9190 | Highest | Client + Server | ✅ **Required** — Only acceptable method |
-| EAP-TEAP | RFC 7170 | High | Server (client optional) | ❌ **Forbidden** |
-| PEAP (MSCHAPv2) | Microsoft | Medium | Server only | ❌ **Forbidden** |
-| EAP-TTLS | RFC 5281 | Medium | Server only | ❌ **Forbidden** |
-| EAP-MD5 | RFC 3748 | Low | None | ❌ **Forbidden** |
-
-> **Policy (Effective 2026):** EAP-TLS is the **only** permitted EAP method for municipal networks. All other EAP methods are forbidden due to insufficient security guarantees. Devices that cannot support EAP-TLS must use MAC Authentication Bypass (MAB) with appropriate network segmentation and monitoring.
-
-### EAP Method Selection
-
-```mermaid
-flowchart TD
-    START[Device Type Assessment] --> Q1{Device supports<br/>certificates?}
-    Q1 -->|Yes| Q2{MDM/PKI<br/>managed?}
-    Q1 -->|No| MAB["MAC Authentication Bypass<br/>(With segmentation + monitoring)"]
-
-    Q2 -->|Yes| EAPTLS["✅ EAP-TLS<br/>(Only permitted method)"]
-    Q2 -->|No| ENROLL["Enroll in PKI/MDM<br/>before deployment"]
-
-    ENROLL --> EAPTLS
-
-    EAPTLS --> RESULT[Apply VLAN/ACL policy]
-    MAB --> RESULT
-```
-
-> **Note:** Devices capable of 802.1X but not EAP-TLS must be enrolled in the PKI before network deployment. There is no fallback to password-based EAP methods.
-
-### EAP-TLS Requirements (Mandatory)
+### Requisitos EAP-TLS
 
 EAP-TLS is **required** for all 802.1X authentication and provides the highest security through mutual certificate authentication:
 
@@ -130,7 +114,7 @@ EAP-TLS is **required** for all 802.1X authentication and provides the highest s
 | Certificate validation | Full chain validation, CRL/OCSP | Revocation checking |
 | TLS version | TLS 1.3 minimum (RFC 8446) | Protocol security |
 
-## RADIUS Architecture
+## Arquitetura ISE / Redundância
 
 ### Redundant Deployment
 
