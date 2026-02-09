@@ -29,12 +29,19 @@ graph LR
 ```mermaid
 stateDiagram-v2
     [*] --> Unauthorized: Port link up
+
     Unauthorized --> Authenticating: EAPoL-Start received
-    Authenticating --> Authorized: Access-Accept
-    Authenticating --> Unauthorized: Access-Reject
-    Authenticating --> Unauthorized: Timeout
-    Authorized --> Unauthorized: Logoff/Link down
+
+    Authenticating --> Authorized: Access-Accept (802.1X)
+    Authenticating --> Unauthorized: Access-Reject (802.1X)
+    Authenticating --> MAB: Timeout (no EAPoL)
+
+    MAB --> Authorized: Access-Accept (MAB)
+    MAB --> Unauthorized: Access-Reject (MAB)
+
+    Authorized --> Unauthorized: Logoff / Link down
     Authorized --> Reauthenticating: Reauth timer
+
     Reauthenticating --> Authorized: Access-Accept
     Reauthenticating --> Unauthorized: Access-Reject
 
@@ -47,6 +54,12 @@ stateDiagram-v2
         Full network access
         per RADIUS attributes
     end note
+
+    note right of MAB
+        MAC Authentication Bypass
+        triggered when 802.1X fails
+    end note
+
 ```
 
 ### Escolha do Método de Autenticação
