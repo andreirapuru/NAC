@@ -178,21 +178,16 @@ sequenceDiagram
 flowchart TD
     DEVICE[Dispositivo conecta] --> DOT1X{Compatível com<br/>802.1X?}
 
-    DOT1X -->|Sim| AUTH[Autenticação 802.1X padrão]
+    DOT1X -->|Sim| AUTH[Autenticação 802.1X]
     DOT1X -->|Não/Timeout| MAB_START[Início do MAB]
 
     MAB_START --> MAC_CHECK{MAC presente<br/>na base de dados?}
-    MAC_CHECK -->|Sim| PROFILE{Perfil do dispositivo<br/>corresponde?}
-    MAC_CHECK -->|Não| QUARANTINE[VLAN de quarentena]
-
-    PROFILE -->|Sim| ASSIGN[Atribuir VLAN de política]
-    PROFILE -->|Não| QUARANTINE
-
-    ASSIGN --> MONITOR[Monitoramento contínuo<br/>de anomalias]
-    QUARANTINE --> ALERT[Alerta de segurança]
+    MAC_CHECK -->|Sim| ASSIGN[Atribuir VLAN de acordo com política]
+    MAC_CHECK -->|Não| DENY[Acesso Negado]
 ```
 
 ### Autenticação EAP-TEAP + MAB
+```mermaid
 sequenceDiagram
     participant S as Suplicante
     participant A as Autenticador (Switch/AP)
@@ -237,6 +232,7 @@ sequenceDiagram
             Note over S,A: Porta permanece não autorizada
         end
     end
+```
 
 ### MAB Configuration Requirements
 
