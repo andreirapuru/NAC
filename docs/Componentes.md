@@ -85,57 +85,6 @@ flowchart TD
     MAB --> RESULT
 ```
 
-## Arquitetura ISE / Redundância
-
-### Redundant Deployment
-
-```mermaid
-graph TB
-    subgraph SITES["Network Sites"]
-        subgraph SITE_A["Site A"]
-            SW_A1["Switch A1"]
-            SW_A2["Switch A2"]
-            AP_A["Access Points"]
-        end
-
-        subgraph SITE_B["Site B"]
-            SW_B1["Switch B1"]
-            AP_B["Access Points"]
-        end
-    end
-
-    subgraph RADIUS_INFRA["RADIUS Infrastructure"]
-        RAD_P["Primary RADIUS<br/>(Datacenter A)"]
-        RAD_S["Secondary RADIUS<br/>(Datacenter B)"]
-    end
-
-    subgraph BACKEND["Backend Services"]
-        AD["Directory Service"]
-        CA["Certificate Authority"]
-        NPS["Network Policy Service"]
-    end
-
-    SW_A1 & SW_A2 & AP_A -->|Primary| RAD_P
-    SW_A1 & SW_A2 & AP_A -.->|Failover| RAD_S
-    SW_B1 & AP_B -->|Primary| RAD_P
-    SW_B1 & AP_B -.->|Failover| RAD_S
-
-    RAD_P & RAD_S --> AD
-    RAD_P & RAD_S --> CA
-    RAD_P & RAD_S --> NPS
-```
-
-### RADIUS Attributes for Policy Enforcement
-
-| Attribute | Number | Purpose | Example |
-|-----------|--------|---------|---------|
-| Tunnel-Type | 64 | VLAN assignment | VLAN |
-| Tunnel-Medium-Type | 65 | Medium type | IEEE-802 |
-| Tunnel-Private-Group-ID | 81 | VLAN ID/name | 20 |
-| Filter-Id | 11 | ACL assignment | CORP-ACL |
-| Session-Timeout | 27 | Reauth interval | 28800 (8 hours) |
-| Termination-Action | 29 | Post-session action | RADIUS-Request |
-
 ## Wired 802.1X Implementation
 
 ### Switch Port Configuration Standards
