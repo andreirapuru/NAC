@@ -1,5 +1,6 @@
+# 802.1X Network Access Control
 
-### Componentes
+## Componentes
 ```mermaid
 graph LR
     subgraph ENDPOINT["Camada de Endpoint"]
@@ -30,7 +31,7 @@ graph LR
     ISE <--> PKI
 ```
 
-### Estado da porta
+## Estado da porta
 
 ```mermaid
 stateDiagram-v2
@@ -67,7 +68,7 @@ stateDiagram-v2
     end note
 ```
 
-### Escolha do Método de Autenticação
+## Escolha do Método de Autenticação
 
 ```mermaid
 flowchart TD
