@@ -12,15 +12,25 @@ Este repositorio tem por objetivo armazenar fluxogramas, ilustrações e paramet
 
 
 
-## Attribution
+## Atribuição e Licença
 
-This repository is based on content from the project:
+Este repositório foi desenvolvido com base em materiais do projeto:
 
-- "City of New Orleans Network Standards"
-- Original repository: https://github.com/NewOrleansITI/networkstandards
-- License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+- **City of New Orleans – Network Standards**
+- Repositório original: https://github.com/NewOrleansITI/networkstandards
+- Licença: Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-Modifications were made, including edits to diagrams and additional content.
+O conteúdo original foi adaptado e expandido. As principais modificações incluem:
+- Edição e adaptação de diagramas de rede
+- Inclusão de novos conteúdos técnicos
+- Ajustes de terminologia e estrutura
 
+Este projeto não possui vínculo oficial com o City of New Orleans ou com seus autores originais, nem representa endosso por parte deles.
 
-License: CC BY 4.0 — https://creativecommons.org/licenses/by/4.0/
+## Licença
+
+Parte do conteúdo deste repositório é derivada de material licenciado sob a licença Creative Commons Attribution 4.0 International (CC BY 4.0).
+
+Para mais informações sobre a licença, acesse:
+https://creativecommons.org/licenses/by/4.0/
+
