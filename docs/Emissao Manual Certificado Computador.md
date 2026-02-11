@@ -42,8 +42,8 @@ Template configurado na CA com as seguintes características:
 ### 2) Acesso à CA
 
 Um dos métodos abaixo:
-- Web Enrollment: http://MSAD-CA/certsrv
-- certreq no servidor da CA
+- A) Web Enrollment: http://MSAD-CA/certsrv
+- B) certreq no servidor da CA
 
 ## Procedimento Operacional
 
