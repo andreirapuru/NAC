@@ -87,19 +87,21 @@ Método A — Web Enrollment (padrão suporte)
 ```
 http://MSAD-CA/certsrv
 ```
+
 2) Selecionar:
-- Request a certificate
-- Advanced certificate request
-- Submit a certificate request
+- Request a certificate > Advanced certificate request > Submit a certificate request
+
 3) Colar o conteúdo do arquivo machine.req
-- Selecionar o template:
+
+4) Selecionar o template:
   - Computer-External
 
-Emitir e baixar o certificado em formato Base64 (.cer)
+5) Emitir e baixar o certificado em formato Base64 (.cer)
 
 Método B — certreq no servidor da CA
-
+```
 certreq -submit -attrib "CertificateTemplate:Computer-External" machine.req machine.cer
+```
 
 ### 3) Instalar certificado na máquina WIN10
 
