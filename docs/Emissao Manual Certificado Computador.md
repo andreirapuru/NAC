@@ -106,50 +106,58 @@ certreq -submit -attrib "CertificateTemplate:Computer-External" machine.req mach
 ### 3) Instalar certificado na máquina WIN10
 
 Copiar o arquivo machine.cer para a máquina WIN10 e executar:
-
+```
 certreq -accept machine.cer
+```
 
 ### 4) Instalar cadeia de certificação (obrigatório)
 
 Importar os certificados da CA:
 Root CA
+```
 Local:
 Local Computer → Trusted Root Certification Authorities
+```
 Intermediate CA (se aplicável)
+```
 Local:
 Local Computer → Intermediate Certification Authorities
+```
 
 ### 5) Validação
 
 Abrir:
+```
 certlm.msc
+```
 
 Verificar:
-Local: Computer → Personal → Certificates
+- Local: Computer → Personal → Certificates
+- Subject: CN=WIN10
+- Template: Computer-External
+- Private Key: disponível
+- EKU: Client Authentication
 
-Subject: CN=WIN10
-Template: Computer-External
-Private Key: disponível
-EKU: Client Authentication
 Comando adicional:
-
+```
 certutil -store my
+```
 
 ## Observações Importantes
 
-Segurança PKI
-❌ Não utilizar o template padrão "Computer" para máquinas fora do domínio.
-✅ Utilizar sempre templates dedicados para dispositivos externos.
-✅ Controlar permissões de Enroll.
-✅ Registrar emissões via ticket/change.
+### Segurança PKI
+- Não utilizar o template padrão "Computer" para máquinas fora do domínio.
+- Utilizar sempre templates dedicados para dispositivos externos.
+- Controlar permissões de Enroll.
+- Registrar emissões via ticket/change.
 
-Boas práticas
-Definir validade menor para certificados externos (ex: 12 meses).
-Padronizar nomenclatura de CN e SAN.
-Manter inventário de certificados emitidos.
-Revisar periodicamente templates da CA.
+### Boas práticas
+- Definir validade menor para certificados externos (ex: 12 meses).
+- Padronizar nomenclatura de CN e SAN.
+- Manter inventário de certificados emitidos.
+- Revisar periodicamente templates da CA.
 
-📚 Referências
-Microsoft AD CS Documentation
-RFC 5280 – X.509 Public Key Infrastructure
-Cisco ISE / NPS Certificate Requirements
+### Referências
+- Microsoft AD CS Documentation
+- RFC 5280 – X.509 Public Key Infrastructure
+- Cisco ISE / NPS Certificate Requirements
