@@ -98,7 +98,7 @@ http://MSAD-CA/certsrv
 
 5) Emitir e baixar o certificado em formato Base64 (.cer)
 
-Método B — certreq no servidor da CA
+Método B — certreq no servidor da CA (requer acesso à CA)
 ```
 certreq -submit -attrib "CertificateTemplate:Computer-External" machine.req machine.cer
 ```
