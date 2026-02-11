@@ -24,7 +24,7 @@ Máquina fora do domínio: WIN10
 
 ## Pré-requisitos
 
-### Template de certificado
+### 1) Template de certificado
 
 Template configurado na CA com as seguintes características:
 Nome: Computer-External
@@ -49,7 +49,7 @@ certreq no servidor da CA
 ### 1.1 Criar arquivo INF
 
 Criar o arquivo machine.inf:
-[Version]
+> [Version]
 Signature="$Windows NT$"
 
 [NewRequest]
