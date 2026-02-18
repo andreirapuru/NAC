@@ -103,14 +103,7 @@ Método B — certreq no servidor da CA (requer acesso à CA)
 certreq -submit -attrib "CertificateTemplate:Computer-External" machine.req machine.cer
 ```
 
-### 3) Instalar certificado na máquina WIN10
-
-Copiar o arquivo machine.cer para a máquina WIN10 e executar:
-```
-certreq -accept machine.cer
-```
-
-### 4) Instalar cadeia de certificação (obrigatório)
+### 3) Instalar cadeia de certificação (obrigatório)
 
 Importar os certificados da CA:
 Root CA
@@ -122,6 +115,13 @@ Intermediate CA (se aplicável)
 ```
 Local:
 Local Computer → Intermediate Certification Authorities
+```
+
+### 4) Instalar certificado na máquina WIN10
+
+Copiar o arquivo machine.cer para a máquina WIN10 e executar:
+```
+certreq -accept machine.cer
 ```
 
 ### 5) Validação
