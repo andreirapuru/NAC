@@ -1,4 +1,4 @@
-# Arquitetura 802.1X
+# 802.1X e NAC
 
 Este repositório reúne diagramas, conceitos e materiais técnicos relacionados à implementação de controle de acesso à rede baseado em identidade, com foco nos mecanismos **IEEE 802.1X** e **MAC Authentication Bypass (MAB)**, integrados a soluções de **Network Access Control (NAC)**, como o Cisco ISE.
 
