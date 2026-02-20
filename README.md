@@ -23,6 +23,8 @@ Este material pode ser utilizado como base para estudos, projetos de arquitetura
 | [Componentes 802.1X](docs/Componentes.md) | Principais componentes do 802.1X |
 | [Tipos de Autenticação](docs/Autenticacao.md) | Métodos de autenticação 802.1X e MAB |
 | [Trust Entre dois Domínios](docs/TrustEntreDoisDominios.md) | Funcionamento com dois domínios com relação de confiança |
+| [Trust Entre dois Domínios](docs/Emissao Manual Certificado Computador.md) | Funcionamento com dois domínios com relação de confiança |
+docs/EmissaoManualCertificadoComputador.md
 
 ---
 
