@@ -1,8 +1,8 @@
 # Cenário
 Cisco Identity Services Engine (ISE) está joinado ao Domínio A
 Existe trust entre:
--- Domínio A
--- Domínio B
+- Domínio A
+- Domínio B
 - Usuário: userB@dominioB.local
 - Método: 802.1X (EAP-PEAP ou EAP-TLS)
 
